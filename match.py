@@ -19,5 +19,18 @@ def match(test_str):
     if match:
         return ["negation", match.group(1)]
 
+    # check agains a binary connector
+    binaryRE = re.compile(ur'^([A-Z]|~[A-Z])(v|\^|\-\>|\<\-\>)([A-Z]|~[A-Z]|\([A-Z~v\^\<\-\>]+\)|~\([A-Z~v\^\<\-\>]+\))$')
+    match = re.search(binaryRE, test_str)
+    if match:
+        if match.group(2) == "v":
+            kind = "disjunction"
+        elif match.group(2) == "^":
+            kind = "conjunction"
+        elif match.group(2) == "->":
+            kind = "implication"
+        elif match.group(2) == "<->":
+            kind = "biconditional"
+        return [kind, match.group(1, 3)]
 
     return None

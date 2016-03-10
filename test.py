@@ -28,6 +28,42 @@ class TestMatching(unittest.TestCase):
       self.assertEqual(kind, "negation")
       self.assertEqual(matches, cases[case])
 
+  def test_disjunction(self):
+    cases = {
+      "AvB": ("A", "B"),
+      "~AvB": ("~A", "B"),
+      "Av~B": ("A", "~B"),
+      "~Av~B": ("~A", "~B"),
+      "Av(B^C)": ("A", "B^C"),
+      "Av(BvC)": ("A", "BvC"),
+      "Av(B->C)": ("A", "B->C"),
+      "Av(B<->C)": ("A", "B<->C"),
+      "Av(~B^C)": ("A", "~B^C"),
+      "Av~(~B^C)": ("A", "~(B^C)"),
+    }
+
+  def test_conjunction(self):
+    cases = {
+      "A^B": ("A", "B"),
+      "~A^B": ("~A", "B"),
+      "A^~B": ("A", "~B"),
+      "~A^~B": ("~A", "~B"),
+      "A^(B^C)": ("A", "B^C"),
+      "A^(BvC)": ("A", "BvC"),
+      "A^(B->C)": ("A", "B->C"),
+      "A^(B<->C)": ("A", "B<->C"),
+      "A^(~B^C)": ("A", "~B^C"),
+    }
+
+  def test_implication(self):
+    cases = {
+
+    }
+
+  def test_biconditional(self):
+    cases = {
+
+    }
 
   def test_no_match(self):
       vals = []
@@ -36,8 +72,7 @@ class TestMatching(unittest.TestCase):
       vals.append(match("A B"))
 
       for val in vals:
-        self.assertIsNone(val)
-
+        self.assertIsNone(val, msg="Invalid pattern matched!")
 
 
 if __name__ == '__main__':
