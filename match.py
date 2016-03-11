@@ -1,5 +1,6 @@
 import re
 
+
 # takes a string and matches it to its "parts" and labels the main connective
 def match(test_str):
     # check against a plain literal
