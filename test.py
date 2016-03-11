@@ -19,6 +19,7 @@ class TestMatching(unittest.TestCase):
       "~(A->B)": "A->B",
       "~(A<->B)": "A<->B",
       "~(~A^~B)": "~A^~B",
+      "~(Av(B^C))": "Av(B^C)"
     }
 
     for case in cases:
@@ -40,6 +41,7 @@ class TestMatching(unittest.TestCase):
       "Av(B<->C)": ("A", "B<->C"),
       "Av(~B^C)": ("A", "~B^C"),
       "Av~(~B^C)": ("A", "~(~B^C)"),
+      "Av~((B^C)->D)": ("A", "~((B^C)->D)")
     }
     for case in cases:
       val = match(case)
@@ -60,6 +62,7 @@ class TestMatching(unittest.TestCase):
       "A^(B<->C)": ("A", "B<->C"),
       "A^(~B^C)": ("A", "~B^C"),
       "A^~(~B^C)": ("A", "~(~B^C)"),
+      "A^~((B^C)->D)": ("A", "~((B^C)->D)")
     }
     for case in cases:
       val = match(case)
@@ -80,6 +83,7 @@ class TestMatching(unittest.TestCase):
       "A->(B<->C)": ("A", "B<->C"),
       "A->(~B^C)": ("A", "~B^C"),
       "A->~(~B^C)": ("A", "~(~B^C)"),
+      "A->~((B^C)->D)": ("A", "~((B^C)->D)")
     }
     for case in cases:
       val = match(case)
@@ -100,6 +104,7 @@ class TestMatching(unittest.TestCase):
       "A<->(B<->C)": ("A", "B<->C"),
       "A<->(~B^C)": ("A", "~B^C"),
       "A<->~(~B^C)": ("A", "~(~B^C)"),
+      "A<->~((B^C)->D)": ("A", "~((B^C)->D)")
     }
     for case in cases:
       val = match(case)

@@ -1,5 +1,6 @@
 import re
 
+# takes a string and matches it to its "parts" and labels the main connective
 def match(test_str):
     # check against a plain literal
     literalRE = re.compile(ur'^([A-Z])$')
@@ -14,13 +15,13 @@ def match(test_str):
         return ["negation", match.group(1)]
 
     # check against a more complex negation
-    negationRE = re.compile(ur'^~\(([A-Zv\^~\<\-\>]+)\)$')
+    negationRE = re.compile(ur'^~\(([A-Zv\^~\<\-\>\(\)]+)\)$')
     match = re.search(negationRE, test_str)
     if match:
         return ["negation", match.group(1)]
 
     # check agains a binary connector
-    binaryRE = re.compile(ur'^\(([A-Zv\^\-\>\<~]+)\)(v|\^|\-\>|\<\-\>)\(([A-Zv\^\-\>\<~]+)\)$')
+    binaryRE = re.compile(ur'^\(([A-Zv\^\-\>\<~\(\)]+)\)(v|\^|\-\>|\<\-\>)\(([A-Zv\^\-\>\<~\(\)]+)\)$')
     match = re.search(binaryRE, test_str)
     if match:
         if match.group(2) == "v":
@@ -34,7 +35,7 @@ def match(test_str):
         return [kind, match.group(1, 3)]
 
     # check agains a binary connector
-    binaryRE = re.compile(ur'^\(([A-Zv\^\-\>\<~]+)\)(v|\^|\-\>|\<\-\>)([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~]+\))$')
+    binaryRE = re.compile(ur'^\(([A-Zv\^\-\>\<~\(\)]+)\)(v|\^|\-\>|\<\-\>)([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~\(\)]+\))$')
     match = re.search(binaryRE, test_str)
     if match:
         if match.group(2) == "v":
@@ -48,7 +49,7 @@ def match(test_str):
         return [kind, match.group(1, 3)]
 
     # check agains a binary connector
-    binaryRE = re.compile(ur'^([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~]+\))(v|\^|\-\>|\<\-\>)\(([A-Zv\^\-\>\<~]+)\)$')
+    binaryRE = re.compile(ur'^([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~\(\)]+\))(v|\^|\-\>|\<\-\>)\(([A-Zv\^\-\>\<~\(\)]+)\)$')
     match = re.search(binaryRE, test_str)
     if match:
         if match.group(2) == "v":
@@ -61,8 +62,8 @@ def match(test_str):
             kind = "biconditional"
         return [kind, match.group(1, 3)]
 
-    # check agains a binary connector   
-    binaryRE = re.compile(ur'^([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~]+\))(v|\^|\-\>|\<\-\>)([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~]+\))$')
+    # check agains a binary connector
+    binaryRE = re.compile(ur'^([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~\(\)]+\))(v|\^|\-\>|\<\-\>)([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~\(\)]+\))$')
     match = re.search(binaryRE, test_str)
     if match:
         if match.group(2) == "v":
@@ -78,6 +79,5 @@ def match(test_str):
     return None
 
 
-#  \(([A-Zv\^\-\>\<~]+)\)
-
-#  ([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~]+\))
+#  \(([A-Zv\^\-\>\<~]+)\)                    # (AvB)
+#  ([A-Z]|~[A-Z]|~\([A-Zv\^\-\>\<~]+\))      # A     ~A      ~(AvB)
