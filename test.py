@@ -39,8 +39,14 @@ class TestMatching(unittest.TestCase):
       "Av(B->C)": ("A", "B->C"),
       "Av(B<->C)": ("A", "B<->C"),
       "Av(~B^C)": ("A", "~B^C"),
-      "Av~(~B^C)": ("A", "~(B^C)"),
+      "Av~(~B^C)": ("A", "~(~B^C)"),
     }
+    for case in cases:
+      val = match(case)
+      self.assertIsNotNone(val, msg="match(%s) == None" % case)
+      [kind, matches] = val
+      self.assertEqual(kind, "disjunction")
+      self.assertEqual(matches, cases[case])
 
   def test_conjunction(self):
     cases = {
@@ -53,17 +59,54 @@ class TestMatching(unittest.TestCase):
       "A^(B->C)": ("A", "B->C"),
       "A^(B<->C)": ("A", "B<->C"),
       "A^(~B^C)": ("A", "~B^C"),
+      "A^~(~B^C)": ("A", "~(~B^C)"),
     }
+    for case in cases:
+      val = match(case)
+      self.assertIsNotNone(val, msg="match(%s) == None" % case)
+      [kind, matches] = val
+      self.assertEqual(kind, "conjunction")
+      self.assertEqual(matches, cases[case])
 
   def test_implication(self):
     cases = {
-
+      "A->B": ("A", "B"),
+      "~A->B": ("~A", "B"),
+      "A->~B": ("A", "~B"),
+      "~A->~B": ("~A", "~B"),
+      "A->(B^C)": ("A", "B^C"),
+      "A->(BvC)": ("A", "BvC"),
+      "A->(B->C)": ("A", "B->C"),
+      "A->(B<->C)": ("A", "B<->C"),
+      "A->(~B^C)": ("A", "~B^C"),
+      "A->~(~B^C)": ("A", "~(~B^C)"),
     }
+    for case in cases:
+      val = match(case)
+      self.assertIsNotNone(val, msg="match(%s) == None" % case)
+      [kind, matches] = val
+      self.assertEqual(kind, "implication")
+      self.assertEqual(matches, cases[case])
 
   def test_biconditional(self):
     cases = {
-
+      "A<->B": ("A", "B"),
+      "~A<->B": ("~A", "B"),
+      "A<->~B": ("A", "~B"),
+      "~A<->~B": ("~A", "~B"),
+      "A<->(B^C)": ("A", "B^C"),
+      "A<->(BvC)": ("A", "BvC"),
+      "A<->(B->C)": ("A", "B->C"),
+      "A<->(B<->C)": ("A", "B<->C"),
+      "A<->(~B^C)": ("A", "~B^C"),
+      "A<->~(~B^C)": ("A", "~(~B^C)"),
     }
+    for case in cases:
+      val = match(case)
+      self.assertIsNotNone(val, msg="match(%s) == None" % case)
+      [kind, matches] = val
+      self.assertEqual(kind, "biconditional")
+      self.assertEqual(matches, cases[case])
 
   def test_no_match(self):
       vals = []
