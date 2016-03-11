@@ -7,7 +7,7 @@ class TestMatching(unittest.TestCase):
       val = match("A")
       self.assertIsNotNone(val)
       [kind, matches] = val
-      self.assertEqual(kind, "literal")
+      self.assertEqual(kind, "lit")
       self.assertEqual(matches, "A")
 
   def test_negation(self):
@@ -26,7 +26,7 @@ class TestMatching(unittest.TestCase):
       val = match(case)
       self.assertIsNotNone(val, msg="match(%s) == None" % case)
       [kind, matches] = val
-      self.assertEqual(kind, "negation")
+      self.assertEqual(kind, "~")
       self.assertEqual(matches, cases[case])
 
   def test_disjunction(self):
@@ -47,7 +47,7 @@ class TestMatching(unittest.TestCase):
       val = match(case)
       self.assertIsNotNone(val, msg="match(%s) == None" % case)
       [kind, matches] = val
-      self.assertEqual(kind, "disjunction")
+      self.assertEqual(kind, "v")
       self.assertEqual(matches, cases[case])
 
   def test_conjunction(self):
@@ -68,7 +68,7 @@ class TestMatching(unittest.TestCase):
       val = match(case)
       self.assertIsNotNone(val, msg="match(%s) == None" % case)
       [kind, matches] = val
-      self.assertEqual(kind, "conjunction")
+      self.assertEqual(kind, "^")
       self.assertEqual(matches, cases[case])
 
   def test_implication(self):
@@ -89,7 +89,7 @@ class TestMatching(unittest.TestCase):
       val = match(case)
       self.assertIsNotNone(val, msg="match(%s) == None" % case)
       [kind, matches] = val
-      self.assertEqual(kind, "implication")
+      self.assertEqual(kind, "->")
       self.assertEqual(matches, cases[case])
 
   def test_biconditional(self):
@@ -110,7 +110,7 @@ class TestMatching(unittest.TestCase):
       val = match(case)
       self.assertIsNotNone(val, msg="match(%s) == None" % case)
       [kind, matches] = val
-      self.assertEqual(kind, "biconditional")
+      self.assertEqual(kind, "<->")
       self.assertEqual(matches, cases[case])
 
   def test_no_match(self):
