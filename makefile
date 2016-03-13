@@ -1,2 +1,2 @@
-test: match.py
-	python test_match.py
+test:
+	python -m unittest discover . "test_*.py"
