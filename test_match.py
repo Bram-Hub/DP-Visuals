@@ -125,4 +125,5 @@ class TestMatching(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    print "Test match():"
     unittest.main()
