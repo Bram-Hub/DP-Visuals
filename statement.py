@@ -16,3 +16,13 @@ class Statement:
 
     def value2(self):
         return self.values[1]
+
+    def contains(self):
+        if self.type == "lit":
+            return [self.value1()]
+        elif self.type == "~":
+            return self.value1().contains()
+        else:
+            c = self.value1().contains()
+            c.extend(self.value2().contains())
+            return c

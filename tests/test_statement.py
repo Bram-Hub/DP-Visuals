@@ -1,5 +1,6 @@
 import unittest
 from statement import Statement
+from parse import parse
 
 
 class TestStatement(unittest.TestCase):
@@ -22,6 +23,13 @@ class TestStatement(unittest.TestCase):
 
     def test_biconditional(self):
         self.assertEqual(Statement("<->", "A", "B").__str__(), "<->(A, B)")
+
+    def test_contains(self):
+        self.assertEqual(parse("A").contains(), ["A"])
+        self.assertEqual(parse("~A").contains(), ["A"])
+        self.assertEqual(parse("AvB").contains(), ["A", "B"])
+        self.assertEqual(parse("Av(BvC)").contains(), ["A", "B", "C"])
+        self.assertEqual(parse("Av((B^C)vD)").contains(), ["A", "B", "C", "D"])
 
 
 if __name__ == '__main__':
