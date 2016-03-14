@@ -38,6 +38,50 @@ class TestStatement(unittest.TestCase):
         self.assertEqual(parse("AvB"), parse("AvB"))
         self.assertEqual(parse("Av(B->C)"), parse("Av(B->C)"))
 
+    def test_reduce_literal(self):
+        stmt = parse("A")
+        red = parse("A")
+        self.assertTrue(stmt.reduce(red))
+
+        stmt = parse("A")
+        red = parse("~A")
+        self.assertFalse(stmt.reduce(red))
+
+    def test_reduce_negation(self):
+        stmt = parse("A")
+        red = parse("B")
+        self.assertEqual(stmt.reduce(red), stmt)
+
+        stmt = parse("~(~A)")
+        red = parse("A")
+        self.assertTrue(stmt.reduce(red))
+
+        stmt = parse("~(AvB)")
+        red = parse("~B")
+        self.assertEqual(stmt.reduce(red), parse("~A"))
+
+    def test_reduce_disjunction(self):
+        stmt = parse("AvB")
+        red = parse("~A")
+        self.assertEqual(stmt.reduce(red), parse("B"))
+
+        stmt = parse("AvB")
+        red = parse("~B")
+        self.assertEqual(stmt.reduce(red), parse("A"))
+
+        stmt = parse("AvB")
+        red = parse("C")
+        self.assertEqual(stmt.reduce(red), parse("AvB"))
+
+    def test_reduce_conjunction(self):
+        pass
+
+    def test_reduce_implication(self):
+        pass
+
+    def test_reduce_biconditional(self):
+        pass
+
 
 if __name__ == '__main__':
     print "Test Statement:"
