@@ -62,6 +62,7 @@ class Statement:
             else:
                 new_v1 = self.value1().reduce(stmt)
                 new_v2 = self.value2().reduce(stmt)
+
                 if self.type == "v":
                     if new_v1 is True or new_v2 is True:
                         return True
@@ -69,12 +70,33 @@ class Statement:
                         return new_v2
                     elif new_v2 is False:
                         return new_v1
-                    else:
-                        return Statement("v", new_v1, new_v2)
+
                 elif self.type == "^":
-                    pass
+                    if new_v1 is False or new_v2 is False:
+                        return False
+                    elif new_v1 is True:
+                        return new_v2
+                    elif new_v2 is True:
+                        return new_v1
+
                 elif self.type == "->":
-                    pass
+                    if new_v1 is True:
+                        return new_v2
+                    elif new_v1 is False:
+                        return True
+                    elif new_v2 is True:
+                        return True
+                    elif new_v2 is False:
+                        return parse.parse("~(%s)" % new_v1.__str__())
+
                 elif self.type == "<->":
-                    pass
-        return None
+                    if new_v1 is True:
+                        return new_v2
+                    elif new_v1 is False:
+                        return parse.parse("~(%s)" % new_v2.__str__())
+                    elif new_v2 is True:
+                        return new_v1
+                    elif new_v2 is False:
+                        return parse.parse("~(%s)" % new_v1.__str__())
+
+                return Statement(self.type, new_v1, new_v2)

@@ -66,6 +66,10 @@ class TestStatement(unittest.TestCase):
         self.assertEqual(stmt.reduce(red), parse("B"))
 
         stmt = parse("AvB")
+        red = parse("A")
+        self.assertTrue(stmt.reduce(red))
+
+        stmt = parse("AvB")
         red = parse("~B")
         self.assertEqual(stmt.reduce(red), parse("A"))
 
@@ -74,13 +78,63 @@ class TestStatement(unittest.TestCase):
         self.assertEqual(stmt.reduce(red), parse("AvB"))
 
     def test_reduce_conjunction(self):
-        pass
+        stmt = parse("A^B")
+        red = parse("~A")
+        self.assertFalse(stmt.reduce(red))
+
+        stmt = parse("A^B")
+        red = parse("A")
+        self.assertEqual(stmt.reduce(red), parse("B"))
+
+        stmt = parse("A^B")
+        red = parse("~B")
+        self.assertFalse(stmt.reduce(red))
+
+        stmt = parse("A^B")
+        red = parse("C")
+        self.assertEqual(stmt.reduce(red), parse("A^B"))
 
     def test_reduce_implication(self):
-        pass
+        stmt = parse("A->B")
+        red = parse("A")
+        self.assertEqual(stmt.reduce(red), parse("B"))
+
+        stmt = parse("A->B")
+        red = parse("~A")
+        self.assertTrue(stmt.reduce(red))
+
+        stmt = parse("A->B")
+        red = parse("B")
+        self.assertTrue(stmt.reduce(red))
+
+        stmt = parse("A->B")
+        red = parse("~B")
+        self.assertEqual(stmt.reduce(red), parse("~A"))
+
+        stmt = parse("A->B")
+        red = parse("C")
+        self.assertEqual(stmt.reduce(red), parse("A->B"))
 
     def test_reduce_biconditional(self):
-        pass
+        stmt = parse("A<->B")
+        red = parse("A")
+        self.assertEqual(stmt.reduce(red), parse("B"))
+
+        stmt = parse("A<->B")
+        red = parse("~A")
+        self.assertEqual(stmt.reduce(red), parse("~B"))
+
+        stmt = parse("A<->B")
+        red = parse("B")
+        self.assertEqual(stmt.reduce(red), parse("A"))
+
+        stmt = parse("A<->B")
+        red = parse("~B")
+        self.assertEqual(stmt.reduce(red), parse("~A"))
+
+        stmt = parse("A<->B")
+        red = parse("C")
+        self.assertEqual(stmt.reduce(red), parse("A<->B"))
 
 
 if __name__ == '__main__':
