@@ -1,3 +1,6 @@
+from parse import parse
+
+
 class Statement:
     def __init__(self, kind, value1, value2=None):
         self.type = kind
@@ -13,6 +16,9 @@ class Statement:
 
     def __eq__(self, other):
         return self.__str__() == other.__str__()
+
+    def __deepcopy__(self):
+        return parse(self.__str__())
 
     def value1(self):
         return self.values[0]
