@@ -11,6 +11,9 @@ class Statement:
         else:
             return "%s(%s, %s)" % (self.type, self.value1(), self.value2())
 
+    def __eq__(self, other):
+        return self.__str__() == other.__str__()
+
     def value1(self):
         return self.values[0]
 

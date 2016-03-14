@@ -31,6 +31,13 @@ class TestStatement(unittest.TestCase):
         self.assertEqual(parse("Av(BvC)").contains(), ["A", "B", "C"])
         self.assertEqual(parse("Av((B^C)vD)").contains(), ["A", "B", "C", "D"])
 
+    def test_eqality(self):
+        self.assertEqual(parse("A"), parse("A"))
+        self.assertNotEqual(parse("A"), parse("B"))
+
+        self.assertEqual(parse("AvB"), parse("AvB"))
+        self.assertEqual(parse("Av(B->C)"), parse("Av(B->C)"))
+
 
 if __name__ == '__main__':
     print "Test Statement:"
