@@ -1,4 +1,4 @@
-from parse import parse
+import parse
 
 
 class Statement:
@@ -14,11 +14,14 @@ class Statement:
         else:
             return "%s(%s, %s)" % (self.type, self.value1(), self.value2())
 
+    def __repr__(self):
+        return self.__str__()
+
     def __eq__(self, other):
         return self.__str__() == other.__str__()
 
     def __deepcopy__(self):
-        return parse(self.__str__())
+        return parse.parse(self.__str__())
 
     def value1(self):
         return self.values[0]

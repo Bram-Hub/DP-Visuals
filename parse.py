@@ -1,16 +1,16 @@
-from match import match
-from statement import Statement
+import match
+import statement
 
 
 def parse(test_str):
-    val = match(test_str)
+    val = match.match(test_str)
     if val is None:
         return None
     else:
         [kind, matches] = val
         if kind == "lit":
-            return Statement(kind, matches)
+            return statement.Statement(kind, matches)
         elif kind == "~":
-            return Statement(kind, parse(matches))
+            return statement.Statement(kind, parse(matches))
         else:
-            return Statement(kind, parse(matches[0]), parse(matches[1]))
+            return statement.Statement(kind, parse(matches[0]), parse(matches[1]))
