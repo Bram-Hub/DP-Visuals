@@ -1,6 +1,7 @@
 from match import match
 from statement import Statement
 
+
 def parse(test_str):
     val = match(test_str)
     if val is None:
