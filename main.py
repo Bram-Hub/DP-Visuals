@@ -1,5 +1,6 @@
 import sys
 import parse
+import satisfiable
 
 
 def open_argument(filename):
@@ -20,4 +21,7 @@ if __name__ == "__main__":
 
     stmt_set = open_argument(sys.argv[1])
 
-    print stmt_set
+    if satisfiable.satisfiable(stmt_set):
+        print "Satisfiable! Therefore, Invalid Argument!"
+    else:
+        print "Unsatisfiable! Therefore, Valid Argument!"
