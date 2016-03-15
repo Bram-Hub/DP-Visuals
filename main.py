@@ -8,7 +8,8 @@ def open_argument(filename):
     f = open(filename)
     stmt_set = []
     for line in f:
-        stmt = parse.parse(line.strip())
+        line = line.strip().replace(" ", "")
+        stmt = parse.parse(line)
         stmt_set.append(stmt)
 
     conclusion = stmt_set[-1]
