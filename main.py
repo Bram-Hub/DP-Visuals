@@ -1,5 +1,6 @@
 import sys
 import parse
+import statement
 import satisfiable
 
 
@@ -9,9 +10,12 @@ def open_argument(filename):
     for line in f:
         stmt = parse.parse(line.strip())
         stmt_set.append(stmt)
+
     conclusion = stmt_set[-1]
+    neg = statement.Statement("~", conclusion)
+
     stmt_set = stmt_set[:-1]
-    stmt_set.append(parse.parse("~(%s)" % conclusion.__str__()))
+    stmt_set.append(neg)
     return stmt_set
 
 if __name__ == "__main__":
@@ -20,7 +24,6 @@ if __name__ == "__main__":
         exit(1)
 
     stmt_set = open_argument(sys.argv[1])
-
     if satisfiable.satisfiable(stmt_set):
         print "Satisfiable! Therefore, Invalid Argument!"
     else:
