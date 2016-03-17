@@ -10,6 +10,9 @@ def open_argument(filename):
     for line in f:
         line = line.strip().replace(" ", "")
         stmt = parse.parse(line)
+        if stmt is None:
+            print "Parsing Error: %s" % line
+            exit(1)
         stmt_set.append(stmt)
 
     conclusion = stmt_set[-1]
