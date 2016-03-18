@@ -24,6 +24,10 @@ class TestSatisfiable(unittest.TestCase):
         stmt_set = [parse("K->H"), parse("H->L"), parse("L->M"), parse("~(K->M)")]
         self.assertFalse(satisfiable(stmt_set))
 
+        # PLA 7
+        stmt_set = [parse("((CvD)^H)->A"), parse("D"), parse("~(H->A)")]
+        self.assertFalse(satisfiable(stmt_set))
+
     def test_satisfiable(self):
         # PLA 4
         stmt_set = [parse("A^(BvC)"), parse("(~CvH)->(H->~H)"), parse("~(A^B)")]
