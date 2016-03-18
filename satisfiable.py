@@ -1,5 +1,6 @@
 import parse
 
+
 def findNextSplit(stmt_set):
     # pick most common literal
     matches = {}
@@ -10,6 +11,7 @@ def findNextSplit(stmt_set):
             matches[c] = c_count + 1
 
     return max(matches.iterkeys(), key=(lambda key: matches[key]))
+
 
 def satisfiable(stmt_set):
     if stmt_set == []:

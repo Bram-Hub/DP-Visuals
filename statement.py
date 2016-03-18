@@ -87,16 +87,17 @@ class Statement:
                     elif new_v2 is True:
                         return True
                     elif new_v2 is False:
-                        return parse.parse("~(%s)" % new_v1.__str__())
+                        return Statement("~", new_v1)
+
 
                 elif self.type == "<->":
                     if new_v1 is True:
                         return new_v2
                     elif new_v1 is False:
-                        return parse.parse("~(%s)" % new_v2.__str__())
+                        return Statement("~", new_v2)
                     elif new_v2 is True:
                         return new_v1
                     elif new_v2 is False:
-                        return parse.parse("~(%s)" % new_v1.__str__())
+                        return Statement("~", new_v1)
 
                 return Statement(self.type, new_v1, new_v2)
