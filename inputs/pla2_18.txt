@@ -1,0 +1,5 @@
+K<->(LvM)
+L->M
+M->K
+KvL
+K->L
