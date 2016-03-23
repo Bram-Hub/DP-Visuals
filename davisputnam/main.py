@@ -3,7 +3,7 @@ import parse
 import statement
 import satisfiable
 
-from ete3 import Tree, TreeStyle
+from ete3 import Tree, TreeStyle, TextFace
 
 
 # read an argument from a file and return a set of the statements contained within
@@ -39,8 +39,8 @@ def open_argument(filename):
 
 if __name__ == "__main__":
     # ensure proper usage
-    if len(sys.argv) != 2:
-        print "Incorrect Usage: python main.py <input file>"
+    if len(sys.argv) != 3:
+        print "Incorrect Usage: python main.py <input file> <output file>"
         exit(1)
 
     # get a statement set from the given file
@@ -49,6 +49,14 @@ if __name__ == "__main__":
     # call the Satisfiable() algorithm to determine whether or not the argument is valid
     sat, tree = satisfiable.satisfiable(stmt_set)
     print tree.get_ascii(show_internal=True)
+
+    ts = TreeStyle()
+    ts.show_leaf_name = False
+
+    for child in tree.traverse():
+        child.add_face(TextFace(child.name), column=0, position="branch-top")
+
+    tree.render(sys.argv[2], w=2000, tree_style=ts)
 
     if sat:
         print "Satisfiable! Therefore, Invalid Argument!"
