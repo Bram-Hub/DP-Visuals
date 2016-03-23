@@ -18,24 +18,29 @@ class TestSatisfiable(unittest.TestCase):
     def test_not_satisfiable(self):
         # PLA 1
         stmt_set = [parse("A->(B^C)"), parse("C<->B"), parse("~C"), parse("~(~A)")]
-        self.assertFalse(satisfiable(stmt_set))
+        ret, _ = satisfiable(stmt_set)
+        self.assertFalse(ret)
 
         # PLA 2
         stmt_set = [parse("K->H"), parse("H->L"), parse("L->M"), parse("~(K->M)")]
-        self.assertFalse(satisfiable(stmt_set))
+        ret, _ = satisfiable(stmt_set)
+        self.assertFalse(ret)
 
         # PLA 7
         stmt_set = [parse("((CvD)^H)->A"), parse("D"), parse("~(H->A)")]
-        self.assertFalse(satisfiable(stmt_set))
+        ret, _ = satisfiable(stmt_set)
+        self.assertFalse(ret)
 
     def test_satisfiable(self):
         # PLA 4
         stmt_set = [parse("A^(BvC)"), parse("(~CvH)->(H->~H)"), parse("~(A^B)")]
-        self.assertTrue(satisfiable(stmt_set))
+        ret, _ = satisfiable(stmt_set)
+        self.assertTrue(ret)
 
         # PLA 12
         stmt_set = [parse("(~JvK)->(L^M)"), parse("~(~JvK)"), parse("~(~(L^M))")]
-        self.assertTrue(satisfiable(stmt_set))
+        ret, _ = satisfiable(stmt_set)
+        self.assertTrue(ret)
 
 if __name__ == '__main__':
     print "Test satisfiable():"

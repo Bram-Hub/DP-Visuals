@@ -3,6 +3,8 @@ import parse
 import statement
 import satisfiable
 
+from ete3 import Tree, TreeStyle
+
 
 # read an argument from a file and return a set of the statements contained within
 def open_argument(filename):
@@ -45,7 +47,10 @@ if __name__ == "__main__":
     stmt_set = open_argument(sys.argv[1])
 
     # call the Satisfiable() algorithm to determine whether or not the argument is valid
-    if satisfiable.satisfiable(stmt_set):
+    sat, tree = satisfiable.satisfiable(stmt_set)
+    print tree.get_ascii(show_internal=True)
+
+    if sat:
         print "Satisfiable! Therefore, Invalid Argument!"
     else:
         print "Unsatisfiable! Therefore, Valid Argument!"

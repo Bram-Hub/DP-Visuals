@@ -12,4 +12,4 @@ test.name = "Test Test Test"
 t.children.append(test)
 print t
 
-t.render("node_style.png", w=400)
+#t.render("node_style.png", w=400)

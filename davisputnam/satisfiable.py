@@ -1,5 +1,5 @@
 import parse
-
+from ete3 import Tree
 
 # determine the next atom to be split on
 def findNextSplit(stmt_set):
@@ -22,13 +22,21 @@ def findNextSplit(stmt_set):
 
 # the Satisfiable() algorithm
 def satisfiable(stmt_set):
+    t = Tree()
+    t.name = str(stmt_set)
 
     if stmt_set == []:
         # if the set is empty, the starting set was Satisfiable, OPEN BRANCH
-        return True
+        ob = Tree()
+        ob.name = "O"
+        t.children.append(ob)
+        return True, t
     if False in stmt_set:
         # if there is a False in the set, then something was unsatisfiable, CLOSE BRANCH
-        return False
+        cb = Tree()
+        cb.name = "X"
+        t.children.append(cb)
+        return False, t
 
     # determine the next atom to split on
     nxt_atm = findNextSplit(stmt_set)
@@ -55,4 +63,8 @@ def satisfiable(stmt_set):
             r.append(stmt_r)
 
     # return ether the left or right branch
-    return satisfiable(l) or satisfiable(r)
+    ret_l, tree_l = satisfiable(l)
+    ret_r, tree_r = satisfiable(r)
+    t.children.append(tree_l)
+    t.children.append(tree_r)
+    return ret_l or ret_r, t
