@@ -1,5 +1,5 @@
 import parse
-from ete3 import Tree
+from ete3 import Tree, TextFace
 
 # determine the next atom to be split on
 def findNextSplit(stmt_set):
@@ -65,6 +65,11 @@ def satisfiable(stmt_set):
     # return ether the left or right branch
     ret_l, tree_l = satisfiable(l)
     ret_r, tree_r = satisfiable(r)
+
+    tree_l.add_face(TextFace(str(nxt_l)), column=0, position="branch-bottom")
+    tree_r.add_face(TextFace(str(nxt_r)), column=0, position="branch-bottom")
+
     t.children.append(tree_l)
     t.children.append(tree_r)
+
     return ret_l or ret_r, t

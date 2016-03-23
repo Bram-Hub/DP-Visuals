@@ -56,7 +56,7 @@ if __name__ == "__main__":
     for child in tree.traverse():
         child.add_face(TextFace(child.name), column=0, position="branch-top")
 
-    tree.render(sys.argv[2], w=2000, tree_style=ts)
+    tree.render(sys.argv[2], tree_style=ts, w=5000)
 
     if sat:
         print "Satisfiable! Therefore, Invalid Argument!"
