@@ -22,20 +22,26 @@ def findNextSplit(stmt_set):
 
 # the Satisfiable() algorithm
 def satisfiable(stmt_set):
+    # create a Tree node for the current set
     t = Tree()
     t.name = str(stmt_set)
 
     if stmt_set == []:
         # if the set is empty, the starting set was Satisfiable, OPEN BRANCH
+        # construct an extra "child" tree that is just an "O" to represent an open branch
         ob = Tree()
         ob.name = "O"
         t.children.append(ob)
+        # return True and the final node
         return True, t
+
     if False in stmt_set:
         # if there is a False in the set, then something was unsatisfiable, CLOSE BRANCH
+        # construct an extra "child" tree that is just an "X" to represent an closed branch
         cb = Tree()
         cb.name = "X"
         t.children.append(cb)
+        # return False and the final node
         return False, t
 
     # determine the next atom to split on
@@ -62,14 +68,17 @@ def satisfiable(stmt_set):
             # don't add it to the new list if the recution was a True
             r.append(stmt_r)
 
-    # return ether the left or right branch
+    # get the satisfiablity of the left and right branches, plus the tree representations of both
     ret_l, tree_l = satisfiable(l)
     ret_r, tree_r = satisfiable(r)
 
+    # add an extra marker to the tree to represent which literal the resulting branch was reduced on
     tree_l.add_face(TextFace(str(nxt_l)), column=0, position="branch-bottom")
     tree_r.add_face(TextFace(str(nxt_r)), column=0, position="branch-bottom")
 
+    # add the left and right child branches to the current node
     t.children.append(tree_l)
     t.children.append(tree_r)
 
+    # return ether the left or right branch and the current tree
     return ret_l or ret_r, t

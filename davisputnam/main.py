@@ -50,17 +50,23 @@ if __name__ == "__main__":
     sat, tree = satisfiable.satisfiable(stmt_set)
     print tree.get_ascii(show_internal=True)
 
-    ts = TreeStyle()
-    ts.show_leaf_name = False
-
-    for child in tree.traverse():
-        child.add_face(TextFace(child.name), column=0, position="branch-top")
-
-    outputfile = sys.argv[2] + "/" + sys.argv[1].split("/")[-1][:-4] + ".png"
-
-    tree.render(outputfile, tree_style=ts, w=5000)
-
+    # say if the argument was valid or not
     if sat:
         print "Satisfiable! Therefore, Invalid Argument!"
     else:
         print "Unsatisfiable! Therefore, Valid Argument!"
+
+    # set teh tree style...
+    ts = TreeStyle()
+    # don't show the name of the leaf nodes (which are just a x/o for a open/closed branch) in the final graph
+    ts.show_leaf_name = False
+
+    for child in tree.traverse():
+        # add a marker with the name of each node, at each node
+        child.add_face(TextFace(child.name), column=0, position="branch-top")
+
+    # the file that the resulting graph will be saved as
+    outputfile = sys.argv[2] + "/" + sys.argv[1].split("/")[-1][:-4] + ".png"
+
+    # render the file and save it
+    tree.render(outputfile, tree_style=ts, w=5000)
