@@ -40,7 +40,7 @@ def open_argument(filename):
 if __name__ == "__main__":
     # ensure proper usage
     if len(sys.argv) != 3:
-        print "Incorrect Usage: python main.py <input file> <output file>"
+        print "Incorrect Usage: python main.py <input file> <output directory>"
         exit(1)
 
     # get a statement set from the given file
@@ -56,7 +56,9 @@ if __name__ == "__main__":
     for child in tree.traverse():
         child.add_face(TextFace(child.name), column=0, position="branch-top")
 
-    tree.render(sys.argv[2], tree_style=ts, w=5000)
+    outputfile = sys.argv[2] + "/" + sys.argv[1].split("/")[-1][:-4] + ".png"
+
+    tree.render(outputfile, tree_style=ts, w=5000)
 
     if sat:
         print "Satisfiable! Therefore, Invalid Argument!"
