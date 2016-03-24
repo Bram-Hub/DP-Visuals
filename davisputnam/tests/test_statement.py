@@ -10,19 +10,19 @@ class TestStatement(unittest.TestCase):
 
     def test_negation(self):
         self.assertEqual(Statement("~", "A").__str__(), "~(A)")
-        self.assertEqual(Statement("~", "v(A, B)").__str__(), "~(v(A, B))")
+        self.assertEqual(Statement("~", "AvB").__str__(), "~(AvB)")
 
     def test_disjunction(self):
-        self.assertEqual(Statement("v", "A", "B").__str__(), "v(A, B)")
+        self.assertEqual(Statement("v", "A", "B").__str__(), "(AvB)")
 
     def test_conjunction(self):
-        self.assertEqual(Statement("^", "A", "B").__str__(), "^(A, B)")
+        self.assertEqual(Statement("^", "A", "B").__str__(), "(A^B)")
 
     def test_implication(self):
-        self.assertEqual(Statement("->", "A", "B").__str__(), "->(A, B)")
+        self.assertEqual(Statement("->", "A", "B").__str__(), "(A->B)")
 
     def test_biconditional(self):
-        self.assertEqual(Statement("<->", "A", "B").__str__(), "<->(A, B)")
+        self.assertEqual(Statement("<->", "A", "B").__str__(), "(A<->B)")
 
     def test_contains(self):
         self.assertEqual(parse("A").contains(), ["A"])

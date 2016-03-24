@@ -15,7 +15,7 @@ class Statement:
         elif self.type == "~":
             return "~(%s)" % self.value1()
         else:
-            return "%s(%s, %s)" % (self.type, self.value1(), self.value2())
+            return "(%s%s%s)" % (self.value1(), self.type, self.value2())
 
     # for print / outputing the statement
     def __repr__(self):
