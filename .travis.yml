@@ -12,6 +12,7 @@ install:
       fi
     - bash miniconda.sh -b -p $HOME/miniconda
     - export PATH="$HOME/miniconda/bin:$PATH"
+    - ete3 version
     - hash -r
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
@@ -25,11 +26,6 @@ install:
     - conda install -c etetoolkit ete3_external_apps
 
 before_script:
-  - python --version
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 2 # give xvfb some time to start
   - ete3 version
-  - mkdir -p ~/.etetoolkit/
 # command to run tests
 script: make test -C davisputnam
