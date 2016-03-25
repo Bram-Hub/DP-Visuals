@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Davis Putnam{% endblock %}
+
+{% block links %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <p></p>
+        <div class="row">
+          <div class="col-md-9">
+            <h2>Create a new Argument</h2>
+          </div>
+          <div class="col-md-3">
+            <h3>Existing Arguments</h3>
+            <ul>
+              {% for a in g.arguments %}
+                <li><a href="/argument/{{a}}">{{a}}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block postscript %}
+
+{% endblock %}
