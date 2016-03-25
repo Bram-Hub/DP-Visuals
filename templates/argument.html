@@ -19,6 +19,15 @@
                 {% endfor %}
                 <li class="list-group-item active">{{g.conclusion}}</li>
             </ul>
+            {% if g.sat %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>Satisfiable!</strong> Invalid Argument
+                </div>
+            {% else %}
+            <div class="alert alert-success" role="alert">
+                <strong>Not Satisfiable!</strong> Valid Argument
+            </div>
+            {% endif %}
           </div>
           <div class="col-md-9">
             <h3>Tree</h3>
