@@ -9,12 +9,20 @@
 
     <div class="container">
         <p></p>
+        <h2>{{g.name}}</h2>
         <div class="row">
           <div class="col-md-3">
-            <h2>The Argument...</h2>
+            <h3>Argument</h3>
+            <ul class="list-group">
+                {% for p in g.premises %}
+                    <li class="list-group-item">{{p}}</li>
+                {% endfor %}
+                <li class="list-group-item active">{{g.conclusion}}</li>
+            </ul>
           </div>
           <div class="col-md-9">
-            <h2>The Resulting diagram</h2>
+            <h3>Tree</h3>
+            <img src="{{g.argument_tree}}" class="img-responsive" alt="argument">
           </div>
         </div>
     </div>

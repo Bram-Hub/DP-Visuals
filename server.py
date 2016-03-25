@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    g.arguments = os.listdir("inputs")
+    g.arguments = os.listdir("static/inputs")
     for i in range(0, len(g.arguments)):
         g.arguments[i] = g.arguments[i].split(".")[0]
 
@@ -13,13 +13,14 @@ def index():
 
 @app.route("/argument/<name>")
 def argument(name):
-    argument_file = "inputs/%s.txt" % name
-    argument_tree = "outputs/%s.png" % name
+    g.name = name
+    argument_file = "static/inputs/%s.txt" % name
+    g.argument_tree = "/static/outputs/%s.png" % name
 
     try:
         f = open(argument_file)  # open the file
     except:
-        print "Could not open file: %s" % filename
+        print "Could not open file: %s" % argument_file
         exit(1)
 
     g.premises = []
