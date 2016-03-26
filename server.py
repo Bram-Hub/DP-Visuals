@@ -1,4 +1,5 @@
 from flask import Flask, render_template, g, abort, request, flash, get_flashed_messages
+from flaskext.markdown import Markdown
 from ete3 import Tree, TreeStyle, TextFace
 import os
 
@@ -8,6 +9,7 @@ from davisputnam import parse
 
 app = Flask(__name__)
 app.secret_key = "$3cR3t"
+markdown = Markdown(app, safe_mode=True, output_format='html5',)
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -94,6 +96,14 @@ def argument(name):
     tree.render(argument_tree, tree_style=ts, w=5000)
 
     return render_template("argument.html")
+
+
+@app.route("/about/")
+def about():
+    readme = open("README.md", "r").read()
+    return render_template("about.html", readme=readme)
+
+
 
 @app.errorhandler(404)
 def page_not_found(error):
