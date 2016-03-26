@@ -3,6 +3,12 @@
 {% block title %}Davis Putnam{% endblock %}
 
 {% block links %}
+<style>
+#existing{
+    max-height: 500px;
+    overflow-y:scroll;
+}
+</style>
 {% endblock %}
 
 {% block body %}
@@ -34,7 +40,7 @@
           </div>
           <div class="col-md-3">
             <h2>Existing Arguments</h2>
-            <ul class="list-group">
+            <ul class="list-group" id="existing">
               {% for a in g.arguments %}
                 <a class="list-group-item" href="/argument/{{a}}">{{a}}</a>
               {% endfor %}
