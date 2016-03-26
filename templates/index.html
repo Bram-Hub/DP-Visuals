@@ -13,13 +13,11 @@
           <div class="col-md-9">
             <h2>Create a new Argument</h2>
             <form action="/" method="POST" class="form-inline">
-                <table class="table">
-                    <div id="premises">
-                        <tr>
-                            <td><label for="1">Premise 1</label></td>
-                            <td><input type="text" class="form-control" name="1" id="1" placeholder="Premise"></td>
-                        </tr>
-                    </div>
+                <table class="table" id="premises">
+                    <tr id="1">
+                        <td><label for="1">Premise 1</label></td>
+                        <td><input type="text" class="form-control" name="1" placeholder="Premise"></td>
+                    </tr>
                     <tr id="conclusion">
                         <td><label for="conclusion">Conclusion</label></td>
                         <td><input type="text" class="form-control" name="conclusion" id="conclusion" placeholder="Conclusion"></td>
@@ -47,11 +45,19 @@
     <script>
     $(document).ready(function(){
         $("#append").click(function(){
-            var premises = $('#premises');
-            console.log(premises);
-            console.log(premises.children()[0]);
+            console.log($("#premises"));
+            children = $("#premises").children();
+            last = children.children()[children.children().length-2];
 
-            var next = "<tr><td><label for='1'>Premise 1</label></td><td><input type='text' class='form-control' name='1' id='1' placeholder='Premise'></td></tr>";
+            var id = parseInt(last.id) + 1;
+
+            //var next = "<tr id='2'><td><label for='1'>Premise 1</label></td><td><input type='text' class='form-control' name='1' placeholder='Premise'></td></tr>";
+
+            var next = "<tr id='" + id + "'><td><label for='";
+            next += id + "'>Premise " + id + "</label><td>";
+            next += "<input type='text' class='form-control' name='" + id + "' placeholder='Premise'>"
+            next += "</td></tr>"
+
             $("#conclusion").before(next);
         });
     });
