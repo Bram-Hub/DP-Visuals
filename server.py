@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g, abort
+from flask import Flask, render_template, g, abort, request, session
 from ete3 import Tree, TreeStyle, TextFace
 import os
 
@@ -7,8 +7,12 @@ from davisputnam import satisfiable
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        for key in request.form:
+            print key, request.form[key]
+
     g.arguments = os.listdir("static/inputs")
     for i in range(0, len(g.arguments)):
         g.arguments[i] = g.arguments[i].split(".")[0]

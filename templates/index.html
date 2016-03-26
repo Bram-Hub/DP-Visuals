@@ -12,6 +12,23 @@
         <div class="row">
           <div class="col-md-9">
             <h2>Create a new Argument</h2>
+            <form action="/" method="POST" class="form-inline">
+                <table class="table">
+                    <div id="premises">
+                        <tr>
+                            <td><label for="1">Premise 1</label></td>
+                            <td><input type="text" class="form-control" name="1" id="1" placeholder="Premise"></td>
+                        </tr>
+                    </div>
+                    <tr id="conclusion">
+                        <td><label for="conclusion">Conclusion</label></td>
+                        <td><input type="text" class="form-control" name="conclusion" id="conclusion" placeholder="Conclusion"></td>
+                    </tr>
+                </table>
+                <input type="submit" value="Submit" class="btn btn-primary">
+                <input type="button" value="Add Premise" class="btn btn-primary addPremise" id="append">
+
+            </form>
           </div>
           <div class="col-md-3">
             <h2>Existing Arguments</h2>
@@ -27,5 +44,16 @@
 
 
 {% block postscript %}
+    <script>
+    $(document).ready(function(){
+        $("#append").click(function(){
+            var premises = $('#premises');
+            console.log(premises);
+            console.log(premises.children()[0]);
 
+            var next = "<tr><td><label for='1'>Premise 1</label></td><td><input type='text' class='form-control' name='1' id='1' placeholder='Premise'></td></tr>";
+            $("#conclusion").before(next);
+        });
+    });
+    </script>
 {% endblock %}
