@@ -48,7 +48,6 @@ def index():
             for premise in premises:
                 f.write(premise + "\n")
             f.write(conclusion + "\n")
-
             f.close()
 
     # load all of the existing arguments
