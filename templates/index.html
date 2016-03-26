@@ -9,6 +9,7 @@
     overflow-y:scroll;
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -45,11 +46,16 @@
           </div>
           <div class="col-md-3">
             <h2>Existing Arguments</h2>
-            <ul class="list-group" id="existing">
-              {% for a in g.arguments %}
-                <a class="list-group-item" href="/argument/{{a}}">{{a}}</a>
-              {% endfor %}
-            </ul>
+            <div id="existing">
+                <input type="text" class="search form-cnotrol" placeholder="Search" />
+                <ul class="list-group list">
+                  {% for a in g.arguments %}
+                    <li class="list-group-item">
+                        <a class="name" href="/argument/{{a}}">{{a}}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
           </div>
         </div>
     </div>
@@ -76,5 +82,11 @@
             $("#conclusion").before(next);
         });
     });
-    </script>
+
+    var options = {
+      valueNames: [ 'name' ]
+    };
+
+    var userList = new List('existing', options);
+        </script>
 {% endblock %}
