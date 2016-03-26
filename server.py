@@ -1,18 +1,57 @@
-from flask import Flask, render_template, g, abort, request, session
+from flask import Flask, render_template, g, abort, request, flash, get_flashed_messages
 from ete3 import Tree, TreeStyle, TextFace
 import os
 
 from davisputnam import main
 from davisputnam import satisfiable
+from davisputnam import parse
 
 app = Flask(__name__)
+app.secret_key = "$3cR3t"
+
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        for key in request.form:
-            print key, request.form[key]
+        premises = []
+        conclusion = None
+        title = None
 
+        for key in request.form:
+            if key == "conclusion":
+                if request.form[key] == "":
+                    flash("Conclusion can't be empty!", "error")
+                else:
+                    conclusion = request.form[key]
+                    parsed = parse.parse(conclusion)
+                    if parsed is None:
+                        flash("Coundn't parse conclusion: %s" % conclusion, "error")
+            elif key == "title":
+                if request.form[key] == "":
+                    flash("Title can't be empty!", "error")
+                else:
+                    existing_arguments = os.listdir("static/inputs")
+                    title = request.form[key].strip().replace(" ", "_") + ".txt"
+                    if title in existing_arguments:
+                        flash("An argument with this name already exists!", "error")
+            else:
+                if request.form[key] != "":
+                    premise = request.form[key]
+                    parsed = parse.parse(premise)
+                    if parsed is None:
+                        flash("Couldn't parse premise: %s" % premise, "error")
+                    else:
+                        premises.append(premise)
+
+        if len(get_flashed_messages()) == 0:
+            f = open("static/inputs/" + title, 'w')
+            for premise in premises:
+                f.write(premise + "\n")
+            f.write(conclusion + "\n")
+
+            f.close()
+
+    # load all of the existing arguments
     g.arguments = os.listdir("static/inputs")
     for i in range(0, len(g.arguments)):
         g.arguments[i] = g.arguments[i].split(".")[0]
