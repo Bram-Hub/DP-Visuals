@@ -17,7 +17,14 @@
         <p></p>
         <div class="row">
           <div class="col-md-9">
-            <h2>Create a new Argument</h2>
+            <h2>
+                Create a new argument
+                <small>
+                    <button type="button" class="btn btn-primary addPremise" id="append">
+                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Premise
+                    </button>
+                </small>
+            </h2>
             <form action="/" method="POST" class="form-inline">
                 <table class="table" id="premises">
                     <tr>
@@ -33,9 +40,6 @@
                         <td><input type="text" class="form-control" name="conclusion" id="conclusion" placeholder="Conclusion"></td>
                     </tr>
                 </table>
-                <button type="button" class="btn btn-primary addPremise" id="append">
-                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Premise
-                </button>
                 <input type="submit" value="Submit" class="btn btn-success">
             </form>
           </div>
