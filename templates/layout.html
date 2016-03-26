@@ -25,9 +25,10 @@
 
       /* Set the fixed height of the footer here */
       #footer {
-        height: 60px;
+        min-height: 60px;
         background-color: #f5f5f5;
         padding-top: 10px;
+        padding-bottom: 10px;
       }
     </style>
     {% block links %}{% endblock %}
@@ -51,7 +52,7 @@
         <div id="navbar" class="navbar-collapse collapse">
 
           <ul id="logList" class="nav navbar-nav navbar-right">
-
+            <li class="liButton"><a href="#">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
