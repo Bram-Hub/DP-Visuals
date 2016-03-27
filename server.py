@@ -1,6 +1,7 @@
 from flask import Flask, render_template, g, abort, request, flash, get_flashed_messages
 from flaskext.markdown import Markdown
 from ete3 import Tree, TreeStyle, TextFace
+import sys
 import os
 
 from davisputnam import main
@@ -110,4 +111,9 @@ def page_not_found(error):
     return render_template("404.html"), 404
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = None
+    if len(sys.argv) > 1:
+        port = int(sys.argv[1])
+    else:
+        port = 5000
+    app.run(host='0.0.0.0', port=port)
