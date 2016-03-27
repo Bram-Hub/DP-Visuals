@@ -59,6 +59,7 @@ def index():
 
     return render_template("index.html")
 
+
 @app.route("/argument/<name>")
 def argument(name):
     g.name = name
@@ -102,7 +103,6 @@ def argument(name):
 def about():
     readme = open("README.md", "r").read()
     return render_template("about.html", readme=readme)
-
 
 
 @app.errorhandler(404)
