@@ -47,10 +47,15 @@ Routes:
 * Literals: Uppercase Letters `A`, `B`, `C`, ...
 * Supported Logical Connectors
     - Negation `~`
+        - `~A`
     - Disjunction `v`
+        - `AvB`
     - Conjunction `^`
+        - `A^B`
     - Implication `->`
+        - `A->B`
     - Biconditional `<->`
+        - `A<->B`
 * Example: Modus Ponens
 
 ```
