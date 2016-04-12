@@ -1,6 +1,7 @@
 from flask import Flask, render_template, g, abort, request, flash, get_flashed_messages
 from flaskext.markdown import Markdown
 from ete3 import Tree, TreeStyle, TextFace
+from PIL import Image, ImageDraw
 import sys
 import os
 
@@ -96,6 +97,14 @@ def argument(name):
 
     # render the file and save it
     tree.render(argument_tree, tree_style=ts, w=5000)
+
+    # crop out the unwanted part of the image...
+    im = Image.open(argument_tree)
+    (x, y) = im.size
+
+    draw = ImageDraw.Draw(im)
+    draw.rectangle((0, y*.5, x*.25, y), fill="white")
+    im.save(argument_tree, "PNG")
 
     return render_template("argument.html")
 
