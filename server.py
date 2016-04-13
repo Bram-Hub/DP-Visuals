@@ -11,7 +11,8 @@ from davisputnam import parse
 
 app = Flask(__name__)
 app.secret_key = "$3cR3t"
-markdown = Markdown(app, safe_mode=True, output_format='html5',)
+app.debug = True
+markdown = Markdown(app, safe_mode=True, output_format='html5')
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -86,6 +87,11 @@ def argument(name):
     print stmt_set
     g.sat, tree = satisfiable.satisfiable(stmt_set)
 
+    existing = os.listdir("static/outputs")
+    for f in existing:
+        if f == name + ".png":
+            return render_template("argument.html")
+
     # set teh tree style...
     ts = TreeStyle()
     # don't show the name of the leaf nodes (which are just a x/o for a open/closed branch) in the final graph
@@ -125,4 +131,4 @@ if __name__ == "__main__":
         port = int(sys.argv[1])
     else:
         port = 5000
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, processes=4)
