@@ -56,10 +56,9 @@ def index():
             f.close()
 
     # load all of the existing arguments
-    g.arguments = os.listdir("static/inputs")
+    g.arguments = sorted(os.listdir("static/inputs"))
     for i in range(0, len(g.arguments)):
         g.arguments[i] = g.arguments[i].split(".")[0]
-
     return render_template("index.html")
 
 
