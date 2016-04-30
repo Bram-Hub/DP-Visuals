@@ -73,8 +73,8 @@ def satisfiable(stmt_set):
     ret_r, tree_r = satisfiable(r)
 
     # add an extra marker to the tree to represent which literal the resulting branch was reduced on
-    tree_l.add_face(TextFace(str(nxt_l)), column=0, position="branch-bottom")
-    tree_r.add_face(TextFace(str(nxt_r)), column=0, position="branch-bottom")
+    tree_l.add_face(TextFace(str(nxt_l), fgcolor="red"), column=0, position="branch-bottom")
+    tree_r.add_face(TextFace(str(nxt_r), fgcolor="red"), column=0, position="branch-bottom")
 
     # add the left and right child branches to the current node
     t.children.append(tree_l)
