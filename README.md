@@ -1,9 +1,9 @@
 # Davis Putnam without CNF
 Automated Theorem Proving based on the [Davis-Putnam](https://en.wikipedia.org/wiki/Davis%E2%80%93Putnam_algorithm?oldformat=true) algorithm
 
-* Shane Aston
-* Dr. Bram van Heuveln
-* Intermediate Logic, RPI, Spring 2016
+## Authors
+2015-2016:
+Shane Aston
 
 ---
 ## How to Use
